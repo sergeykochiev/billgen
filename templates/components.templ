@@ -1,0 +1,142 @@
+package templates
+
+import "github.com/sergeykochiev/billgen/types"
+
+templ tableComponent(bil types.BillItemList) {
+	<table>
+		<thead>
+			<tr>
+				<th>№</th>
+				<th style="width: 45%">Товар</th>
+				<th style="width: 15%">Цена</th>
+				<th style="width: 10%">Кол-во</th>
+				<th style="width: 10%">Ед.</th>
+				<th style="width: 15%">Сумма</th>
+			</tr>
+		</thead>
+		<tbody>
+			for i, bi := range bil.Bia {
+				<tr>
+					<td class="value-cell">{ i + 1 }</td>
+					<td style="text-align: start">{ bi.Name }</td>
+					<td class="value-cell">{ bi.Cost }</td>
+					<td>{ bi.Count }</td>
+					<td>{ bi.One_is_called }</td>
+					<td class="value-cell">{ bi.Summ }</td>
+				</tr>
+			}
+			<tr>
+				<td class="bordernone"></td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td style="font-size: 8pt" class="value-cell">Итого:</td>
+				<td></td>
+				<th class="value-cell">{ bil.Summ }</th>
+			</tr>
+		</tfoot>
+	</table>
+}
+
+templ tableUnderfooter(bil types.BillItemList) {
+	<u style="font-size: 9pt">
+		Всего наименований { bil.Len } на сумму { bil.Summ } руб.
+	</u>
+	<br/>
+	<span style="font-size: 11pt">
+		<i>Сумма:</i>
+		{ bil.SummString }
+	</span>
+}
+
+templ StyleComponent() {
+	<style>
+    th {
+        font-size: 10pt;
+    }
+    td {
+        font-size: 9pt;
+        text-align: center;
+    }
+    .xflip {
+        -moz-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: fliph;
+    }
+    .yflip {
+        -moz-transform: scaleY(-1);
+        -webkit-transform: scaleY(-1);
+        -o-transform: scaleY(-1);
+        transform: scaleY(-1);
+        filter: flipv;
+    }
+    .xyflip {
+        -moz-transform: scaleX(-1) scaleY(-1);
+        -webkit-transform: scaleX(-1) scaleY(-1);
+        -o-transform: scaleX(-1) scaleY(-1);
+        transform: scaleX(-1) scaleY(-1);
+        filter: fliph + flipv;
+    }
+    .page {
+        padding: 1cm 1.5cm 1.5cm 1cm;
+        width: 210mm;
+        height: 297mm;
+    }
+    .heading {
+        width: 100%;
+        font-size: 14pt;
+        text-align: center;
+    }
+    table {
+        white-space: nowrap;
+        border-collapse: collapse;
+        border: 1px solid;
+        width: 100%;
+        box-sizing: border-box;
+        border-color: rgb(17 24 39);
+    }
+    thead > tr > * {
+        padding: 1.5mm 2.5mm 2.5mm 1.5mm;
+        outline-style: solid;
+        outline-width: 1mm;
+        outline-offset: -0.5mm;
+    }
+    tbody > tr > * {
+        padding: 1mm;
+        border: 1px solid;
+        border-width: 1px;
+    }
+    tfoot > tr > * {
+        padding: 0.5mm 1mm 1mm 0.5mm;
+        border: 1px solid gray;
+    }
+    tfoot > tr {
+        border-top: 1mm solid;
+        border-bottom: 1mm solid;
+    }
+    .bordernone {
+        border: none;
+    }
+    body {
+        font-family: "Arial";
+    }
+    .value-cell {
+        text-align: end;
+    }
+    section {
+        font-size: 9pt;
+        width: 100%;
+        display: flex;
+    }
+    section > * {
+        width: 100%;
+        text-align: center;
+    }
+    </style>
+}

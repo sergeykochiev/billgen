@@ -1,0 +1,6 @@
+github.com/a-h/templ v0.3.865 h1:nYn5EWm9EiXaDgWcMQaKiKvrydqgxDUtT1+4zU2C43A=
+github.com/a-h/templ v0.3.865/go.mod h1:oLBbZVQ6//Q6zpvSMPTuBK0F3qOtBdFBcGRspcT+VNQ=
+github.com/adrg/go-wkhtmltopdf v0.3.0 h1:Zy/bbS6fPlAzuogW5uKa/sLX+SNWwV2DvVued0ZD55c=
+github.com/adrg/go-wkhtmltopdf v0.3.0/go.mod h1:PabO59E2w5GMKC8apqcXmf5rZZmiydIP3H1Wb4Uox6I=
+github.com/google/go-cmp v0.6.0 h1:ofyhxvXcZhMsU5ulbFiLKl/XBFqE1GSq7atu8tAmTRI=
+github.com/google/go-cmp v0.6.0/go.mod h1:17dUlkBOakJ0+DkrSSNjCkIjxS6bF9zb3elmeNGIjoY=

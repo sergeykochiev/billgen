@@ -1,0 +1,41 @@
+package templates
+
+import "github.com/sergeykochiev/billgen/types"
+
+templ BillTemplate(ci types.CompanyInfo, bil types.BillItemList, client_company_name string, bill_number string, date string) {
+	<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+		<head>
+			<title>Счет</title>
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+			@StyleComponent()
+		</head>
+		<body class="page">
+			<p style="font-size: 12pt">
+				ПОСТАВЩИК: ИНН { ci.Inn }
+				<br/>
+				{ ci.Name }
+				<br/>
+				{ ci.Address }
+				<br/>
+				Тел { ci.Address }
+				<br/>
+				РЕКВИЗИТЫ ПОСТАВЩИКА:
+				<br/>
+				Банк: { ci.Details.Bank }
+				<br/>
+				р/с { ci.Details.Rs }
+				<br/>
+				к/с { ci.Details.Ks }, БИК { ci.Details.Bik }
+				<br/>
+			</p>
+			<p class="heading"><b>Счет № { bill_number } от { date } г.</b></p>
+			<p style="font-size: 10pt">ПЛАТЕЛЬЩИК: { client_company_name }</p>
+			@tableComponent(bil)
+			<br/>
+			@tableUnderfooter(bil)
+			<br/>
+			<br/>
+			<i style="font-size: 9pt">Д.У. _________________/{ ci.PersonResp }/</i>
+		</body>
+	</html>
+}
