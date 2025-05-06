@@ -4,7 +4,7 @@ import "github.com/a-h/templ"
 
 type TemplateFunc func(ci CompanyInfo, bil BillItemList, client_company_name string, bill_number string, date string) templ.Component
 
-type GenFunc func(ci CompanyInfo, bil BillItemList, client_company_name string, bill_number string, date string) []byte
+type GenFunc func(ci CompanyInfo, bil BillItemList, client_company_name string, bill_number string, date string) error
 
 type CompanyDetails struct {
 	Bank string
