@@ -39,5 +39,5 @@ func main() {
 		Len:  1,
 		Summ: 0,
 	}
-	f.Write(gen.CreateBillPdf(ci, bil, "SampleClientCompanyName", "120938123", "2 oct 2025"))
+	gen.CreateBillPdf(f, ci, bil, "SampleClientCompanyName", "120938123", "2 oct 2025")
 }
