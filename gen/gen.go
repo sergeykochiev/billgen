@@ -12,10 +12,6 @@ import (
 )
 
 func createPdfFromHtml(c templ.Component) []byte {
-	if err := pdf.Init(); err != nil {
-		log.Fatal(err)
-	}
-	defer pdf.Destroy()
 	var sr bytes.Buffer
 	c.Render(context.Background(), &sr)
 	obj, err := pdf.NewObjectFromReader(&sr)
