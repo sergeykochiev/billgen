@@ -3,7 +3,7 @@ package gen
 import (
 	"bytes"
 	"context"
-	"log"
+	"io"
 
 	"github.com/a-h/templ"
 	pdf "github.com/adrg/go-wkhtmltopdf"
@@ -11,30 +11,29 @@ import (
 	"github.com/sergeykochiev/billgen/types"
 )
 
-func createPdfFromHtml(c templ.Component) []byte {
+func createPdfFromHtml(c templ.Component, w io.Writer) error {
 	var sr bytes.Buffer
 	c.Render(context.Background(), &sr)
 	obj, err := pdf.NewObjectFromReader(&sr)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	converter, err := pdf.NewConverter()
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer converter.Destroy()
-	var sw bytes.Buffer
 	converter.Add(obj)
-	if err := converter.Run(&sw); err != nil {
-		log.Fatal(err)
+	if err := converter.Run(w); err != nil {
+		return err
 	}
-	return sw.Bytes()
+	return nil
 }
 
-func CreateBillPdf(ci types.CompanyInfo, bil types.BillItemList, client_company_name string, bill_number string, date string) []byte {
-	return createPdfFromHtml(templates.BillTemplate(ci, bil, client_company_name, bill_number, date))
+func CreateBillPdf(w io.Writer, ci types.CompanyInfo, bil types.BillItemList, client_company_name string, bill_number string, date string) error {
+	return createPdfFromHtml(templates.BillTemplate(ci, bil, client_company_name, bill_number, date), w)
 }
 
-func CreateInvoicePdf(ci types.CompanyInfo, bil types.BillItemList, client_company_name string, bill_number string, date string) []byte {
-	return createPdfFromHtml(templates.InvoiceTemplate(ci, bil, client_company_name, bill_number, date))
+func CreateInvoicePdf(w io.Writer, ci types.CompanyInfo, bil types.BillItemList, client_company_name string, bill_number string, date string) error {
+	return createPdfFromHtml(templates.InvoiceTemplate(ci, bil, client_company_name, bill_number, date), w)
 }
