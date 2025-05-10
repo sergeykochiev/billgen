@@ -16,7 +16,7 @@ templ THCellComponent(width float32, value string) {
 	{{
 		var style string
 		if width == 0 {
-			style = ""
+			style = "font-size: 10pt; padding: 1.5mm 2.5mm 2.5mm 1.5mm; outline-style: solid; outline-width: 1mm; outline-offset: -0.5mm"
 		} else {
 			style = fmt.Sprintf("width: %d; font-size: 10pt; padding: 1.5mm 2.5mm 2.5mm 1.5mm; outline-style: solid; outline-width: 1mm; outline-offset: -0.5mm", int(width*100))
 		}

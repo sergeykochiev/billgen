@@ -1,13 +1,17 @@
 package templates
 
-import "github.com/sergeykochiev/billgen/types"
+import (
+	"fmt"
+	"github.com/sergeykochiev/billgen/types"
+)
 
 templ InvoiceTemplate(ci types.CompanyInfo, bil types.BillItemList, client_company_name string, bill_number string, date string) {
 	@a4PageComponent("Товарная накладная") {
 		<b style="font-size: 11pt">ООО { ci.Name }</b>
 		<br/>
 		<span style="font-size: 10pt">{ ci.Address }</span>
-		@HeadingComponent("Товарная накладная { bill_number } от { date } г.")
+		{{ heading := fmt.Sprintf("Товарная накладная %s от %s г.", bill_number, date) }}
+		@HeadingComponent(heading)
 		<p style="font-size: 10pt">
 			<b><u>Покупатель:</u></b> { client_company_name }
 			<br/>

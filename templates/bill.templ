@@ -1,6 +1,7 @@
 package templates
 
 import "github.com/sergeykochiev/billgen/types"
+import "fmt"
 
 templ BillTemplate(ci types.CompanyInfo, bil types.BillItemList, client_company_name string, bill_number string, date string) {
 	@a4PageComponent("Счет") {
@@ -22,7 +23,8 @@ templ BillTemplate(ci types.CompanyInfo, bil types.BillItemList, client_company_
 			к/с { ci.Details.Ks }, БИК { ci.Details.Bik }
 			<br/>
 		</p>
-		@HeadingComponent("Счет № { bill_number } от { date } г.")
+		{{ heading := fmt.Sprintf("Счет № %s от %s г.", bill_number, date) }}
+		@HeadingComponent(heading)
 		<p style="font-size: 10pt">ПЛАТЕЛЬЩИК: { client_company_name }</p>
 		{{ h, d, f := bil.ToTData() }}
 		@TableComponent(h, d, f)
