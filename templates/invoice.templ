@@ -3,36 +3,35 @@ package templates
 import "github.com/sergeykochiev/billgen/types"
 
 templ InvoiceTemplate(ci types.CompanyInfo, bil types.BillItemList, client_company_name string, bill_number string, date string) {
-	<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
-		<head>
-			<title>Товарная накладная</title>
-			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-			@StyleComponent()
-		</head>
-		<body class="page">
-			<b style="font-size: 11pt">ООО { ci.Name }</b>
+	@a4PageComponent("Товарная накладная") {
+		<b style="font-size: 11pt">ООО { ci.Name }</b>
+		<br/>
+		<span style="font-size: 10pt">{ ci.Address }</span>
+		@HeadingComponent("Товарная накладная { bill_number } от { date } г.")
+		<p style="font-size: 10pt">
+			<b><u>Покупатель:</u></b> { client_company_name }
 			<br/>
-			<span style="font-size: 10pt">{ ci.Address }</span>
-			<p class="heading">
-				<b>
-					Товарная накладная { bill_number } от { date } г.
-				</b>
-			</p>
-			<p style="font-size: 10pt">
-				<b><u>Покупатель:</u></b> { client_company_name }
-				<br/>
-				Основание: Счет { bill_number } от { date } г.
-			</p>
-			{{h,d,f := bil.ToTData()}}
-			@TableComponent(h, d, f)
-			<br/>
-			@tableUnderfooter(bil)
-			<br/>
-			<br/>
-			<section>
-				<span>Отпустил ____________________</span>
-				<span>Получил ____________________</span>
-			</section>
-		</body>
-	</html>
+			Основание: Счет { bill_number } от { date } г.
+		</p>
+		{{ h, d, f := bil.ToTData() }}
+		@TableComponent(h, d, f)
+		<br/>
+		@tableUnderfooter(bil)
+		<br/>
+		<br/>
+		<section
+			style="font-size: 9pt; width: 100%; display: flex"
+		>
+			<span
+				style="font-size: 9pt;
+        width: 100%;
+        display: flex;"
+			>Отпустил ____________________</span>
+			<span
+				style="font-size: 9pt;
+        width: 100%;
+        display: flex;"
+			>Получил ____________________</span>
+		</section>
+	}
 }

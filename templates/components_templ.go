@@ -46,7 +46,7 @@ func THCellComponent(width float32, value string) templ.Component {
 		if width == 0 {
 			style = ""
 		} else {
-			style = fmt.Sprintf("width: %d%; font-size: 10pt; padding: 1.5mm 2.5mm 2.5mm 1.5mm; outline-style: solid; outline-width: 1mm; outline-offset: -0.5mm", int(width*100))
+			style = fmt.Sprintf("width: %d; font-size: 10pt; padding: 1.5mm 2.5mm 2.5mm 1.5mm; outline-style: solid; outline-width: 1mm; outline-offset: -0.5mm", int(width*100))
 		}
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<th style=\"")
 		if templ_7745c5c3_Err != nil {
@@ -55,7 +55,7 @@ func THCellComponent(width float32, value string) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templruntime.SanitizeStyleAttributeValues(style)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components.templ`, Line: 24, Col: 17}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components.templ`, Line: 24, Col: 18}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -68,7 +68,7 @@ func THCellComponent(width float32, value string) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(value)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components.templ`, Line: 24, Col: 25}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components.templ`, Line: 24, Col: 28}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -82,7 +82,7 @@ func THCellComponent(width float32, value string) templ.Component {
 	})
 }
 
-func TDCellComponent(align int, value string) templ.Component {
+func TDCellComponent(align int, value string, style string) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -107,7 +107,7 @@ func TDCellComponent(align int, value string) templ.Component {
 		if align < 0 || align > 2 {
 			log.Fatal("unsupported align")
 		}
-		align_style := fmt.Sprintf("text-align: %s; font-size: 9pt", align_styles[align])
+		align_style := fmt.Sprintf("text-align: %s; font-size: 9pt; border: 1px solid; padding-inline: 1mm; %s", align_styles[align], style)
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<td style=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -115,7 +115,7 @@ func TDCellComponent(align int, value string) templ.Component {
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templruntime.SanitizeStyleAttributeValues(align_style)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components.templ`, Line: 34, Col: 23}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components.templ`, Line: 34, Col: 24}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
@@ -128,7 +128,7 @@ func TDCellComponent(align int, value string) templ.Component {
 		var templ_7745c5c3_Var6 string
 		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(value)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components.templ`, Line: 34, Col: 31}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components.templ`, Line: 34, Col: 34}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
@@ -183,7 +183,7 @@ func TableComponent(thda []types.THData, tddaa [][]types.TDData, ftdda []types.T
 				return templ_7745c5c3_Err
 			}
 			for _, tdd := range tdda {
-				templ_7745c5c3_Err = TDCellComponent(tdd.Align, tdd.Value).Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = TDCellComponent(tdd.Align, tdd.Value, "").Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -198,7 +198,7 @@ func TableComponent(thda []types.THData, tddaa [][]types.TDData, ftdda []types.T
 			return templ_7745c5c3_Err
 		}
 		for _, ftdd := range ftdda {
-			templ_7745c5c3_Err = TDCellComponent(ftdd.Align, ftdd.Value).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = TDCellComponent(ftdd.Align, ftdd.Value, "border-color: gray; padding-top: 0.5mm; padding-bottom: 0.5mm").Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -279,7 +279,7 @@ func tableUnderfooter(bil types.BillItemList) templ.Component {
 	})
 }
 
-func StyleComponent() templ.Component {
+func a4PageComponent(heading string) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -300,7 +300,70 @@ func StyleComponent() templ.Component {
 			templ_7745c5c3_Var12 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "<style>\r\n    .page {\r\n        padding: 1cm 1.5cm 1.5cm 1cm;\r\n        width: 210mm;\r\n        height: 297mm;\r\n    }\r\n    .heading {\r\n        width: 100%;\r\n        font-size: 14pt;\r\n        text-align: center;\r\n    }\r\n    thead > tr > * {\r\n        padding: 1.5mm 2.5mm 2.5mm 1.5mm;\r\n        outline-style: solid;\r\n        outline-width: 1mm;\r\n        outline-offset: -0.5mm;\r\n    }\r\n    tbody > tr > * {\r\n        padding: 1mm;\r\n        border: 1px solid;\r\n        border-width: 1px;\r\n    }\r\n    tfoot > tr > * {\r\n        padding: 0.5mm 1mm 1mm 0.5mm;\r\n        border: 1px solid gray;\r\n    }\r\n    .bordernone {\r\n        border: none;\r\n    }\r\n    body {\r\n        font-family: \"Arial\";\r\n    }\r\n    section {\r\n        font-size: 9pt;\r\n        width: 100%;\r\n        display: flex;\r\n    }\r\n    section > * {\r\n        width: 100%;\r\n        text-align: center;\r\n    }\r\n    </style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"\" xml:lang=\"\"><head><title>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var13 string
+		templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(heading)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components.templ`, Line: 82, Col: 19}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 18, "</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"></head><body style=\"font-family: &#34;Arial&#34;; padding: 1cm 1.5cm 1.5cm 1cm; width: 210mm; height: 297mm\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templ_7745c5c3_Var12.Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 19, "</body></html>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+func HeadingComponent(heading string) templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var14 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var14 == nil {
+			templ_7745c5c3_Var14 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 20, "<p style=\"width: 100%; font-size: 14pt; text-align: center\"><b>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var15 string
+		templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs(heading)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components.templ`, Line: 96, Col: 12}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var15))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 21, "</b></p>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

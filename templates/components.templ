@@ -1,8 +1,8 @@
 package templates
 
 import (
-	"github.com/sergeykochiev/billgen/types"
 	"fmt"
+	"github.com/sergeykochiev/billgen/types"
 	"log"
 )
 
@@ -18,20 +18,20 @@ templ THCellComponent(width float32, value string) {
 		if width == 0 {
 			style = ""
 		} else {
-			style = fmt.Sprintf("width: %d%; font-size: 10pt; padding: 1.5mm 2.5mm 2.5mm 1.5mm; outline-style: solid; outline-width: 1mm; outline-offset: -0.5mm", int(width * 100))
+			style = fmt.Sprintf("width: %d; font-size: 10pt; padding: 1.5mm 2.5mm 2.5mm 1.5mm; outline-style: solid; outline-width: 1mm; outline-offset: -0.5mm", int(width*100))
 		}
 	}}
-	<th style={style}>{value}</th>
+	<th style={ style }>{ value }</th>
 }
 
-templ TDCellComponent(align int, value string) {
+templ TDCellComponent(align int, value string, style string) {
 	{{
 		if align < 0 || align > 2 {
 			log.Fatal("unsupported align")
 		}
-		align_style := fmt.Sprintf("text-align: %s; font-size: 9pt", align_styles[align])
+		align_style := fmt.Sprintf("text-align: %s; font-size: 9pt; border: 1px solid; padding-inline: 1mm; %s", align_styles[align], style)
 	}}
-	<td style={align_style}>{value}</td>
+	<td style={ align_style }>{ value }</td>
 }
 
 templ TableComponent(thda []types.THData, tddaa [][]types.TDData, ftdda []types.TDData) {
@@ -47,7 +47,7 @@ templ TableComponent(thda []types.THData, tddaa [][]types.TDData, ftdda []types.
 			for _, tdda := range tddaa {
 				<tr>
 					for _, tdd := range tdda {
-						@TDCellComponent(tdd.Align, tdd.Value)
+						@TDCellComponent(tdd.Align, tdd.Value, "")
 					}
 				</tr>
 			}
@@ -58,7 +58,7 @@ templ TableComponent(thda []types.THData, tddaa [][]types.TDData, ftdda []types.
 		<tfoot>
 			<tr style="border-top: 1mm solid; border-bottom: 1mm solid;">
 				for _, ftdd := range ftdda {
-					@TDCellComponent(ftdd.Align, ftdd.Value)
+					@TDCellComponent(ftdd.Align, ftdd.Value, "border-color: gray; padding-top: 0.5mm; padding-bottom: 0.5mm")
 				}
 			</tr>
 		</tfoot>
@@ -76,47 +76,24 @@ templ tableUnderfooter(bil types.BillItemList) {
 	</span>
 }
 
-templ StyleComponent() {
-	<style>
-    .page {
-        padding: 1cm 1.5cm 1.5cm 1cm;
-        width: 210mm;
-        height: 297mm;
-    }
-    .heading {
-        width: 100%;
-        font-size: 14pt;
-        text-align: center;
-    }
-    thead > tr > * {
-        padding: 1.5mm 2.5mm 2.5mm 1.5mm;
-        outline-style: solid;
-        outline-width: 1mm;
-        outline-offset: -0.5mm;
-    }
-    tbody > tr > * {
-        padding: 1mm;
-        border: 1px solid;
-        border-width: 1px;
-    }
-    tfoot > tr > * {
-        padding: 0.5mm 1mm 1mm 0.5mm;
-        border: 1px solid gray;
-    }
-    .bordernone {
-        border: none;
-    }
-    body {
-        font-family: "Arial";
-    }
-    section {
-        font-size: 9pt;
-        width: 100%;
-        display: flex;
-    }
-    section > * {
-        width: 100%;
-        text-align: center;
-    }
-    </style>
+templ a4PageComponent(heading string) {
+	<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+		<head>
+			<title>{ heading }</title>
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		</head>
+		<body style='font-family: "Arial"; padding: 1cm 1.5cm 1.5cm 1cm; width: 210mm; height: 297mm'>
+			{ children... }
+		</body>
+	</html>
+}
+
+templ HeadingComponent(heading string) {
+	<p
+		style="width: 100%; font-size: 14pt; text-align: center"
+	>
+		<b>
+			{ heading }
+		</b>
+	</p>
 }
