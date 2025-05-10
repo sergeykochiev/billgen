@@ -134,7 +134,8 @@ func InvoiceTemplate(ci types.CompanyInfo, bil types.BillItemList, client_compan
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = tableComponent(bil).Render(ctx, templ_7745c5c3_Buffer)
+		h, d, f := bil.ToTData()
+		templ_7745c5c3_Err = TableComponent(h, d, f).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

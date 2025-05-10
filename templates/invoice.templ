@@ -23,7 +23,8 @@ templ InvoiceTemplate(ci types.CompanyInfo, bil types.BillItemList, client_compa
 				<br/>
 				Основание: Счет { bill_number } от { date } г.
 			</p>
-			@tableComponent(bil)
+			{{h,d,f := bil.ToTData()}}
+			@TableComponent(h, d, f)
 			<br/>
 			@tableUnderfooter(bil)
 			<br/>

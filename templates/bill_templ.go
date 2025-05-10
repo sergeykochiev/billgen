@@ -186,7 +186,8 @@ func BillTemplate(ci types.CompanyInfo, bil types.BillItemList, client_company_n
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = tableComponent(bil).Render(ctx, templ_7745c5c3_Buffer)
+		h, d, f := bil.ToTData()
+		templ_7745c5c3_Err = TableComponent(h, d, f).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -205,7 +206,7 @@ func BillTemplate(ci types.CompanyInfo, bil types.BillItemList, client_company_n
 		var templ_7745c5c3_Var13 string
 		templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(ci.PersonResp)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/bill.templ`, Line: 38, Col: 69}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/bill.templ`, Line: 39, Col: 69}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
 		if templ_7745c5c3_Err != nil {

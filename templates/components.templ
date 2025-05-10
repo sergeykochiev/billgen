@@ -1,42 +1,65 @@
 package templates
 
-import "github.com/sergeykochiev/billgen/types"
+import (
+	"github.com/sergeykochiev/billgen/types"
+	"fmt"
+	"log"
+)
 
-templ tableComponent(bil types.BillItemList) {
-	<table>
+var align_styles = map[int]string{
+	0: "start",
+	1: "center",
+	2: "end",
+}
+
+templ THCellComponent(width float32, value string) {
+	{{
+		var style string
+		if width == 0 {
+			style = ""
+		} else {
+			style = fmt.Sprintf("width: %d%; font-size: 10pt; padding: 1.5mm 2.5mm 2.5mm 1.5mm; outline-style: solid; outline-width: 1mm; outline-offset: -0.5mm", int(width * 100))
+		}
+	}}
+	<th style={style}>{value}</th>
+}
+
+templ TDCellComponent(align int, value string) {
+	{{
+		if align < 0 || align > 2 {
+			log.Fatal("unsupported align")
+		}
+		align_style := fmt.Sprintf("text-align: %s; font-size: 9pt", align_styles[align])
+	}}
+	<td style={align_style}>{value}</td>
+}
+
+templ TableComponent(thda []types.THData, tddaa [][]types.TDData, ftdda []types.TDData) {
+	<table style=" white-space: nowrap; border-collapse: collapse; border: 1px solid; width: 100%; box-sizing: border-box; border-color: rgb(17 24 39);">
 		<thead>
 			<tr>
-				<th>№</th>
-				<th style="width: 45%">Товар</th>
-				<th style="width: 15%">Цена</th>
-				<th style="width: 10%">Кол-во</th>
-				<th style="width: 10%">Ед.</th>
-				<th style="width: 15%">Сумма</th>
+				for _, thd := range thda {
+					@THCellComponent(thd.Width, thd.Value)
+				}
 			</tr>
 		</thead>
 		<tbody>
-			for i, bi := range bil.Bia {
+			for _, tdda := range tddaa {
 				<tr>
-					<td class="value-cell">{ i + 1 }</td>
-					<td style="text-align: start">{ bi.Name }</td>
-					<td class="value-cell">{ bi.Cost }</td>
-					<td>{ bi.Count }</td>
-					<td>{ bi.One_is_called }</td>
-					<td class="value-cell">{ bi.Summ }</td>
+					for _, tdd := range tdda {
+						@TDCellComponent(tdd.Align, tdd.Value)
+					}
 				</tr>
 			}
 			<tr>
-				<td class="bordernone"></td>
+				<td></td>
 			</tr>
 		</tbody>
 		<tfoot>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td style="font-size: 8pt" class="value-cell">Итого:</td>
-				<td></td>
-				<th class="value-cell">{ bil.Summ }</th>
+			<tr style="border-top: 1mm solid; border-bottom: 1mm solid;">
+				for _, ftdd := range ftdda {
+					@TDCellComponent(ftdd.Align, ftdd.Value)
+				}
 			</tr>
 		</tfoot>
 	</table>
@@ -55,34 +78,6 @@ templ tableUnderfooter(bil types.BillItemList) {
 
 templ StyleComponent() {
 	<style>
-    th {
-        font-size: 10pt;
-    }
-    td {
-        font-size: 9pt;
-        text-align: center;
-    }
-    .xflip {
-        -moz-transform: scaleX(-1);
-        -webkit-transform: scaleX(-1);
-        -o-transform: scaleX(-1);
-        transform: scaleX(-1);
-        filter: fliph;
-    }
-    .yflip {
-        -moz-transform: scaleY(-1);
-        -webkit-transform: scaleY(-1);
-        -o-transform: scaleY(-1);
-        transform: scaleY(-1);
-        filter: flipv;
-    }
-    .xyflip {
-        -moz-transform: scaleX(-1) scaleY(-1);
-        -webkit-transform: scaleX(-1) scaleY(-1);
-        -o-transform: scaleX(-1) scaleY(-1);
-        transform: scaleX(-1) scaleY(-1);
-        filter: fliph + flipv;
-    }
     .page {
         padding: 1cm 1.5cm 1.5cm 1cm;
         width: 210mm;
@@ -92,14 +87,6 @@ templ StyleComponent() {
         width: 100%;
         font-size: 14pt;
         text-align: center;
-    }
-    table {
-        white-space: nowrap;
-        border-collapse: collapse;
-        border: 1px solid;
-        width: 100%;
-        box-sizing: border-box;
-        border-color: rgb(17 24 39);
     }
     thead > tr > * {
         padding: 1.5mm 2.5mm 2.5mm 1.5mm;
@@ -116,18 +103,11 @@ templ StyleComponent() {
         padding: 0.5mm 1mm 1mm 0.5mm;
         border: 1px solid gray;
     }
-    tfoot > tr {
-        border-top: 1mm solid;
-        border-bottom: 1mm solid;
-    }
     .bordernone {
         border: none;
     }
     body {
         font-family: "Arial";
-    }
-    .value-cell {
-        text-align: end;
     }
     section {
         font-size: 9pt;

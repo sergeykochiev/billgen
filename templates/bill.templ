@@ -30,7 +30,8 @@ templ BillTemplate(ci types.CompanyInfo, bil types.BillItemList, client_company_
 			</p>
 			<p class="heading"><b>Счет № { bill_number } от { date } г.</b></p>
 			<p style="font-size: 10pt">ПЛАТЕЛЬЩИК: { client_company_name }</p>
-			@tableComponent(bil)
+			{{h,d,f := bil.ToTData()}}
+			@TableComponent(h, d, f)
 			<br/>
 			@tableUnderfooter(bil)
 			<br/>
