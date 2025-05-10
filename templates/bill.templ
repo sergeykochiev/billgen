@@ -4,7 +4,7 @@ import "github.com/sergeykochiev/billgen/types"
 import "fmt"
 
 templ BillTemplate(ci types.CompanyInfo, bil types.BillItemList, client_company_name string, bill_number string, date string) {
-	@a4PageComponent("Счет") {
+	@A4PageComponent("Счет") {
 		<p style="font-size: 12pt">
 			ПОСТАВЩИК: ИНН { ci.Inn }
 			<br/>

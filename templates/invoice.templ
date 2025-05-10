@@ -6,7 +6,7 @@ import (
 )
 
 templ InvoiceTemplate(ci types.CompanyInfo, bil types.BillItemList, client_company_name string, bill_number string, date string) {
-	@a4PageComponent("Товарная накладная") {
+	@A4PageComponent("Товарная накладная") {
 		<b style="font-size: 11pt">ООО { ci.Name }</b>
 		<br/>
 		<span style="font-size: 10pt">{ ci.Address }</span>
