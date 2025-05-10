@@ -29,7 +29,7 @@ templ TDCellComponent(align int, value string, style string) {
 		if align < 0 || align > 2 {
 			log.Fatal("unsupported align")
 		}
-		align_style := fmt.Sprintf("text-align: %s; font-size: 9pt; border: 1px solid; padding-inline: 1mm; %s", align_styles[align], style)
+		align_style := fmt.Sprintf("text-align: %s; font-size: 9pt; border: 1px solid; %s", align_styles[align], style)
 	}}
 	<td style={ align_style }>{ value }</td>
 }
@@ -47,7 +47,7 @@ templ TableComponent(thda []types.THData, tddaa [][]types.TDData, ftdda []types.
 			for _, tdda := range tddaa {
 				<tr>
 					for _, tdd := range tdda {
-						@TDCellComponent(tdd.Align, tdd.Value, "")
+						@TDCellComponent(tdd.Align, tdd.Value, "padding: 1mm")
 					}
 				</tr>
 			}
@@ -58,7 +58,7 @@ templ TableComponent(thda []types.THData, tddaa [][]types.TDData, ftdda []types.
 		<tfoot>
 			<tr style="border-top: 1mm solid; border-bottom: 1mm solid;">
 				for _, ftdd := range ftdda {
-					@TDCellComponent(ftdd.Align, ftdd.Value, "border-color: gray; padding-top: 0.5mm; padding-bottom: 0.5mm")
+					@TDCellComponent(ftdd.Align, ftdd.Value, "border-color: gray; padding: 0.5mm 1mm 1mm 0.5mm")
 				}
 			</tr>
 		</tfoot>
