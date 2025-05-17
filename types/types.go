@@ -10,7 +10,7 @@ import (
 
 type THData struct {
 	Value string
-	Width float32
+	Width float64
 }
 
 type TDData struct {
@@ -41,16 +41,16 @@ type CompanyInfo struct {
 type BillItemList struct {
 	Bia        []BillItem
 	Len        int
-	Summ       float32
+	Summ       float64
 	SummString string
 }
 
 type BillItem struct {
 	Name          string
-	Cost          float32
+	Cost          float64
 	Count         int
 	One_is_called string
-	Summ          float32
+	Summ          float64
 }
 
 func (bi *BillItem) ToTRow(i int) []TDData {

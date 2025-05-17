@@ -20,7 +20,7 @@ var align_styles = map[int]string{
 	2: "end",
 }
 
-func THCellComponent(width float32, value string) templ.Component {
+func THCellComponent(width float64, value string) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {

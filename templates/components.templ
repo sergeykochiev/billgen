@@ -12,7 +12,7 @@ var align_styles = map[int]string{
 	2: "end",
 }
 
-templ THCellComponent(width float32, value string) {
+templ THCellComponent(width float64, value string) {
 	{{
 		var style string
 		if width == 0 {
